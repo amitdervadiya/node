@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>welcome to the server</h1>
+    <%students.map((e,i)=>{%>
+        <table border="1px solid black">
+
+            <thead>
+                <th>
+                    id
+                </th>
+                <th>name</th>
+                <th>age</th>
+            </thead>
+            <tr>
+                <td>
+                    <%=e.id%>
+                </td>
+
+
+                <td>
+                    <%=e.name%>
+                </td>
+
+
+                <td>
+                    <%=e.age%>
+                </td>
+            </tr>
+        </table>
+
+        <%})%>
+</body>
+
+</html>
