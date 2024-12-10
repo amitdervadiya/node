@@ -1,42 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Student Management</title>
 </head>
-
 <body>
-    <h1>welcome to the server</h1>
-    <%students.map((e,i)=>{%>
+    <h1>Welcome to the Student Management System</h1>
+    
+    <form action="/adddata" method="post">
+        <input type="text" placeholder="Name" name="name" required>
+        <input type="text" placeholder="Age" name="age" required>
+        <button type="submit">Add Data</button>
+    </form>
+
+    <% if (students.length === 0) { %>
+        <p>No students found!</p>
+    <% } else { %>
         <table border="1px solid black">
-
             <thead>
-                <th>
-                    id
-                </th>
-                <th>name</th>
-                <th>age</th>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th colspan="2">Actions</th>
+                </tr>
             </thead>
-            <tr>
-                <td>
-                    <%=e.id%>
-                </td>
-
-
-                <td>
-                    <%=e.name%>
-                </td>
-
-
-                <td>
-                    <%=e.age%>
-                </td>
-            </tr>
+            <tbody>
+                <% students.map((e, i) => { %>
+                    <tr>
+                        <td><%= e.id %></td>
+                        <td><%= e.name %></td>
+                        <td><%= e.age %></td>
+                        <td>
+                            <a href="/deletedata?id=<%= e.id %>">Delete Data</a>
+                        </td>
+                        <td>
+                            <a href="/editdata?id=<%= e.id %>">Edit Data</a>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
         </table>
-
-        <%})%>
+    <% } %>
 </body>
-
 </html>
