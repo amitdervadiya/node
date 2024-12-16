@@ -129,7 +129,12 @@ app.get("/Fantasy", (req, res) => {
 })
 app.get("/random", (req, res) => {
     res.render("random", { Books })
+
 })
+app.get('/home', (req, res) => {
+    res.redirect('/')
+})
+
 
 
 app.listen(port, (err) => {
