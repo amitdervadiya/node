@@ -118,6 +118,18 @@ app.post("/updatedata", (req, res) => {
 app.get("/education", (req, res) => {
     res.render("education", { Books })
 })
+app.get("/recipe", (req, res) => {
+    res.render("recipe", { Books })
+})
+app.get("/History", (req, res) => {
+    res.render("History", { Books })
+})
+app.get("/Fantasy", (req, res) => {
+    res.render("Fantasy", { Books })
+})
+app.get("/random", (req, res) => {
+    res.render("random", { Books })
+})
 
 
 app.listen(port, (err) => {
