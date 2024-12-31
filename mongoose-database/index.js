@@ -5,6 +5,8 @@ const db = require('./config/db')
 const path = require('path')
 const schema = require('./model/firstschema')
 const multer = require('multer')
+const fs = require('fs')
+const { data } = require('autoprefixer')
 app.set('view engine', 'ejs')
 app.use(express.urlencoded())
 
@@ -40,8 +42,18 @@ app.get('/editdata', async (req, res) => {
         res.render('edit', { data })
     })
 })
-app.post('/updatedata', async (req, res) => {
+app.post('/updatedata', upload, async (req, res) => {
+    let singledata = schema.findById(req.body.id).then((data) => {
+        data.image = req.file.path
+    })
+    let img = ''
+    req.file ? img = req.file.path : img = singledata.image
+    req.body.image = img;
     console.log(req.body.id)
+    console.log(req.body)
+    req.file && fs.unlink('singledata.image', (err) => {
+        console.log(err)
+    })
     await schema.findByIdAndUpdate(req.body.id, req.body).then((data) => {
         res.redirect('/')
     })
