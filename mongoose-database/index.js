@@ -57,6 +57,7 @@ app.post('/updatedata', upload, async (req, res) => {
     await schema.findByIdAndUpdate(req.body.id, req.body).then((data) => {
         res.redirect('/')
     })
+    
 })
 
 app.get('/deletedata', async (req, res) => {
