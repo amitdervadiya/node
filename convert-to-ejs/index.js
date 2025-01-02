@@ -9,6 +9,7 @@ app.get('/', (req, res) => {
 })
 
 app.use(express.static(path.join(__dirname, 'public')))
+
 app.listen(port, (err) => {
     if (err) {
         console.log(err)
@@ -16,5 +17,4 @@ app.listen(port, (err) => {
     else {
         console.log(`Server is running on port ${port}`)
     }
-
 })
