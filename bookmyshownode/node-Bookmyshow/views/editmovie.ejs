@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Movie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white shadow-lg rounded-lg w-96 p-6">
+        <h1 class="text-2xl font-bold text-gray-800 text-center mb-4">Edit Movie</h1>
+        <form action="/update" method="post" enctype="multipart/form-data" class="space-y-4">
+          
+            <input type="text" name="id" value="<%=data.id%>" hidden>
+
+   
+            <div>
+                <label for="image" class="block text-sm font-medium text-gray-700">Movie Poster</label>
+                <input type="file" name="image" id="image" class="block w-full text-sm text-gray-600 border border-gray-300 rounded-lg mt-1 p-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+       
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Movie Name</label>
+                <input type="text" name="name" id="name" placeholder="Movie Name" value="<%=data.name%>" required
+                    class="block w-full text-sm text-gray-800 border border-gray-300 rounded-lg mt-1 p-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+         
+            <div>
+                <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+                <input type="text" name="title" id="title" placeholder="Title" value="<%=data.title%>" required
+                    class="block w-full text-sm text-gray-800 border border-gray-300 rounded-lg mt-1 p-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+         
+            <div class="text-center">
+                <button type="submit"
+                    class="bg-green-400 text-white px-4 py-2 rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    Update
+                </button>
+            </div>
+
+        
+            <div class="mt-6">
+                <h2 class="text-sm font-medium text-gray-700">Previous Image</h2>
+                <div class="flex items-center justify-center mt-2">
+                    <img src="<%=data.image%>" alt="Movie Poster" class="h-32 w-32 object-cover rounded-lg shadow">
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
