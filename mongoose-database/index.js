@@ -51,13 +51,13 @@ app.post('/updatedata', upload, async (req, res) => {
     req.body.image = img;
     console.log(req.body.id)
     console.log(req.body)
-    req.file && fs.unlink('singledata.image', (err) => {
+    req.file && fs.unlinkSync('singledata.image', (err) => {
         console.log(err)
     })
     await schema.findByIdAndUpdate(req.body.id, req.body).then((data) => {
         res.redirect('/')
     })
-    
+
 })
 
 app.get('/deletedata', async (req, res) => {
