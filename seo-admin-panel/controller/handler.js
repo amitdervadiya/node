@@ -2,47 +2,55 @@ const adminSchema = require('../model/adminSchema')
 const fs = require('fs')
 
 module.exports.loginForm = (req, res) => {
-    if (req.cookies.admin) {
-        res.redirect('/dashboard')
-    } else {
-        res.render('login')
-        res.end()
-    }
+    res.render('login')
+    // if (req.cookies.admin) {
+    //     res.redirect('/dashboard')
+    // } else {
+    //     res.render('login')
+    //     res.end()
+    // }
 }
 module.exports.login = async (req, res) => {
-    const admin = await adminSchema.findOne({ email: req.body.email })
-    if (admin) {
-        if (admin.password === req.body.password) {
-            res.cookie('adminData', admin)
-            res.redirect('/dashboard')
-        } else {
-            res.redirect('/')
-        }
-    }
-    else {
-        res.redirect('/')
-    }
+    res.redirect('/dashboard')
+    // const admin = await adminSchema.findOne({ email: req.body.email })
+    // if (admin) {
+    //     if (admin.password === req.body.password) {
+    //         res.cookie('adminData', admin)
+    //         res.redirect('/dashboard')
+    //     } else {
+    //         res.redirect('/')
+    //     }
+    // }
+    // else {
+    //     res.redirect('/')
+    // }
 }
 module.exports.logout = (req, res) => {
-    res.clearCookie('adminData')
+    // res.clearCookie('adminData')
+    req.session.destroy()
     res.redirect('/')
 }
 module.exports.dashboard = (req, res) => {
-    if (req.cookies.adminData) {
-        res.render('dashboard')
-        res.end()
-    } else {
-        res.redirect('/')
-    }
+    res.render('dashboard')
+
+    // if (req.cookies.adminData) {
+    //     res.render('dashboard')
+    //     res.end()
+    // } else {
+    //     res.redirect('/')
+    // }
 }
 module.exports.viewAdmin = async (req, res) => {
-    if (req.cookies.adminData) {
-        const admins = await adminSchema.find({})
-        res.render('viewAdmin', { admins })
-        res.end()
-    } else {
-        res.redirect('/')
-    }
+    const admins = await adminSchema.find({})
+    res.render('viewAdmin', { admins })
+    res.end()
+    // if (req.cookies.adminData) {
+    //     const admins = await adminSchema.find({})
+    //     res.render('viewAdmin', { admins })
+    //     res.end()
+    // } else {
+    //     res.redirect('/')
+    // }
 }
 module.exports.addAdmin = (req, res) => {
     res.render('addAdmin')
@@ -65,13 +73,16 @@ module.exports.delete = async (req, res) => {
     await adminSchema.findByIdAndDelete(req.params.id).then(() => res.redirect('/viewAdmin'))
 }
 module.exports.edit = async (req, res) => {
-    if (req.cookies.adminData) {
-        const admin = await adminSchema.findById(req.params.id)
-        console.log(admin)
-        res.render('edit', { admin })
-    } else {
-        res.redirect('/')
-    }
+    const admin = await adminSchema.findById(req.params.id)
+    console.log(admin)
+    res.render('edit', { admin })
+    // if (req.cookies.adminData) {
+    //     const admin = await adminSchema.findById(req.params.id)
+    //     console.log(admin)
+    //     res.render('edit', { admin })
+    // } else {
+    //     res.redirect('/')
+    // }
 }
 module.exports.update = async (req, res) => {
     let img = ""
