@@ -37,15 +37,15 @@ passport.deserializeUser(async (userid, done) => {
     let user = await adminschema.findById(userid)
     done(null, user)
 })
-passport.checkauthrise = (req, res, next) => {
-    if (req.isAuthenticated()) {
-        res.locals.user = req.user; 
-        console.log(req.user); 
-    } else {
-        console.log('User is not authenticated');
-    }
-    next();
-};
+// passport.checkauthrise = (req, res, next) => {
+//     if (req.isAuthenticated()) {
+//         res.locals.user = req.user; 
+//         console.log(req.user); 
+//     } else {
+//         console.log('User is not authenticated');
+//     }
+//     next();
+// };
 
 
 module.exports = passport

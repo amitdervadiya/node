@@ -1,5 +1,6 @@
 const adminSchema = require('../model/adminSchema')
 const fs = require('fs')
+const nodemailer = require('../middleware/nodemailer')
 
 module.exports.loginform = async (req, res) => {
     res.render('login')
@@ -90,7 +91,57 @@ module.exports.updateAdmin = async (req, res) => {
 module.exports.profile = (req, res) => {
     res.render('profile')
 }
+module.exports.changepassword = (req, res) => {
+    res.render('password')
+}
+module.exports.changepass = async (req, res) => {
+    let user = req.user
+    console.log(user)
+    if (user.password == req.body.oldpassword) {
+        if (user.password !== req.body.newpassword) {
+            if (req.body.newpassword == req.body.confirmpassword) {
+                let admin = await adminSchema.findByIdAndUpdate(user.id, { password: req.body.newpassword })
+                res.redirect('/')
+            }
+            else {
+                console.log('new pass and confirm pass have to be same')
+            }
+        }
+        else {
+            console.log('old and new password are not have to be same')
+        }
+    }
+    else {
+        console.log('password is not matched')
+    }
+}
 
+module.exports.forgotpass = async (req, res) => {
+    // res.render("recoverpass")
+    let admin = await adminSchema.findOne({ email: req.body.email })
+    if (!admin) {
+        res.redirect('/')
+    }
+
+    else {
+        let otp = Math.floor((Math.random() * 1000) + (Math.random() * 1000) + 100)
+        let email = req.body.email
+        nodemailer.sendotp(email, otp)
+        console.log(otp)
+        req.session.otp = otp
+        req.session.admindata = admin
+        res.render("recoverpass")
+    }
+}
+
+module.exports.recoverypass = (req, res) => {
+    let otp = req.session.otp
+    let admin = req.session.admindata
+    console.log(otp + " " + "get it")
+    console.log(admin)
+
+
+}
 module.exports.logout = (req, res) => {
     req.session.destroy()
     res.redirect('/');

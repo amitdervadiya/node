@@ -6,6 +6,7 @@ const database = require('./config/database')
 const cookie = require('cookie-parser')
 const passport = require('./middleware/passport')
 const session = require('express-session')
+const nodemailer = require('./middleware/nodemailer')
 
 const app = express()
 app.set('view engine', 'ejs')
@@ -21,7 +22,9 @@ app.use(session({
 }))
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(passport.checkauthrise)
+// app.use(passport.checkauthrise)
+// app.use(nodemailer.sendotp)
+
 app.use('/', route)
 
 app.listen(port, (err) => err ? console.log(err) : console.log('Server Started...'))
