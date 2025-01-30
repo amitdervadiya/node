@@ -124,7 +124,7 @@ module.exports.forgotpass = async (req, res) => {
     }
 
     else {
-        let otp = Math.floor((Math.random() * 1000) + (Math.random() * 1000) + 100)
+        let otp = Math.floor((Math.random() * 1000) + (Math.random() * 1000) + 1000)
         let email = req.body.email
         nodemailer.sendotp(email, otp)
         console.log(otp)
@@ -134,13 +134,26 @@ module.exports.forgotpass = async (req, res) => {
     }
 }
 
-module.exports.recoverypass = (req, res) => {
+module.exports.recoverypass = async (req, res) => {
     let otp = req.session.otp
     let admin = req.session.admindata
+
+
     console.log(otp + " " + "get it")
     console.log(admin)
-
-
+    if (otp == req.body.otp) {
+        if (req.body.newpassword == req.body.confirmpassword) {
+            await adminSchema.findByIdAndUpdate(admin._id, { password: req.body.newpassword })
+            console.log("password changed")
+            res.redirect('/')
+        }
+        else {
+            console.log('new pass and confirm pass have to be same')
+        }
+    }
+    else {
+        console.log('password is not matched')
+    }
 }
 module.exports.logout = (req, res) => {
     req.session.destroy()

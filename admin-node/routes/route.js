@@ -16,13 +16,9 @@ route.get('/deletedata', handler.deleteAdmin)
 
 route.get('/editdata', handler.editAdmin)
 route.get('/profile', handler.profile)
-
-
 route.post('/updateAdmin', upload, handler.updateAdmin)
 route.get('/changepassword', handler.changepassword)
 route.post('/changepass', handler.changepass)
-
-
 route.get('/logout', handler.logout)
 route.post('/forgotpass', handler.forgotpass)
 route.post('/recoverypass', handler.recoverypass)
