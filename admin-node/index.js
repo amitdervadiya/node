@@ -7,12 +7,14 @@ const cookie = require('cookie-parser')
 const passport = require('./middleware/passport')
 const session = require('express-session')
 const nodemailer = require('./middleware/nodemailer')
+const categoryroute = require("./routes/category")
 
 const app = express()
 app.set('view engine', 'ejs')
 app.use(express.urlencoded())
 app.use(cookie())
 app.use(express.static(path.join(__dirname, 'public')))
+app.use('/category',express.static(path.join(__dirname, 'public')))
 app.use('/upload', express.static(path.join(__dirname, 'upload')))
 app.use(session({
     secret: 'rnw',
@@ -22,9 +24,10 @@ app.use(session({
 }))
 app.use(passport.initialize())
 app.use(passport.session())
-// app.use(passport.checkauthrise)
-// app.use(nodemailer.sendotp)
+app.use(passport.checkauthrise)
+
 
 app.use('/', route)
+app.use('/category', categoryroute )
 
 app.listen(port, (err) => err ? console.log(err) : console.log('Server Started...'))
