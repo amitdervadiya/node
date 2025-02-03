@@ -81,18 +81,18 @@
                                                 </td>
 
                                                 <td>
-                                                    <%=e.category%>
+                                                    <%=e.categoryid.category%>
                                                 </td>
                                                 <td>
                                                     <%= e.subcategory%>
                                                 </td>
-                                                <td><img src="<%=e.img%>" alt="IMAGE" style="height: 50px;width: 50px;"></td>
+                                                <td><img src="/<%=e.categoryid.img%>" alt="IMAGE" style="height: 50px;width: 50px;"></td>
                                                 <td colspan="2">
-                                                    <button> <a href="/category/editcat?id=<%=e.id%>">
+                                                    <button> <a href="/subcategory/editsubcat?id=<%=e.id%>">
                                                             edit
                                                         </a>
                                                     </button>
-                                                    <button><a href="/category/deletecat?id=<%=e.id%>">delete</a></button>
+                                                    <button><a href="/subcategory/deletesubcat?id=<%=e.id%>">delete</a></button>
                                                 </td>
                                             </tr>
                                             <%}) %>

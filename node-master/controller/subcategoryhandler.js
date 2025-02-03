@@ -9,7 +9,7 @@ module.exports.addsubcat = async (req, res) => {
     })
 }
 module.exports.addsubcategory = async (req,res)=>{
-    await subcategorySchema.create(req.body).then((data)=>{
+    await subcategorySchema.create(req.body).then(()=>{
        
         res.redirect('/subcategory/addsubcat')
     })
@@ -22,3 +22,18 @@ module.exports.viewsubcatgory = async (req,res) => {
     res.render('viewsubcatgory',{data})
   })   
 }
+
+module.exports.editsubcat = async (req,res)=>{
+ await categorySchema.findById(req.body.id).then((data)=>{
+   console.log(data)
+res.render('editsubcat',{data})
+ })
+}
+
+module.exports.deletesubcat = async (req,res)=>{
+  
+  await categorySchema.findByIdAndDelete(req.body.id).then((data)=>{
+    console.log(data)
+ res.redirect('/subcategory/viewsubcatgory')
+  })
+ }

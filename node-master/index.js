@@ -18,8 +18,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use("/",express.static(path.join(__dirname, 'public')))
 app.use('/category',express.static(path.join(__dirname, 'public')))
 app.use('/subcategory',express.static(path.join(__dirname, 'public')))
-app.use('/img',express.static(path.join(__dirname, 'img')))
+app.use('/viewcategory',express.static(path.join(__dirname, 'public')))
 app.use('/upload', express.static(path.join(__dirname, 'upload')))
+app.use('/public', express.static(path.join(__dirname, 'public')))
 
 app.use(session({
     secret: 'rnw',
