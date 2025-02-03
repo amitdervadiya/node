@@ -24,15 +24,15 @@ module.exports.viewsubcatgory = async (req,res) => {
 }
 
 module.exports.editsubcat = async (req,res)=>{
- await categorySchema.findById(req.body.id).then((data)=>{
-   console.log(data)
+ await subcategorySchema.findById(req.query.id).then((data)=>{
+ console.log(data)
 res.render('editsubcat',{data})
  })
 }
 
 module.exports.deletesubcat = async (req,res)=>{
-  
-  await categorySchema.findByIdAndDelete(req.body.id).then((data)=>{
+  console.log(req.query , "id is here")
+  await subcategorySchema.findByIdAndDelete(req.query.id).then((data)=>{
     console.log(data)
  res.redirect('/subcategory/viewsubcatgory')
   })

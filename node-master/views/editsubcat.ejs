@@ -25,9 +25,9 @@
 
 
 <body>
-    <form class="form-horizontal" action="/category/updatecat" method="post" enctype="multipart/form-data">
+    <form class="form-horizontal" action="/subcategory/updatesubcat" method="post" enctype="multipart/form-data">
         <div class="card-body">
-            <h4 class="card-title">Admin Details</h4>
+            <h4 class="card-title">subcategory Details</h4>
             <div class="form-group row">
                 <label for="id" class="col-sm-3 text-right control-label col-form-label">
                     id</label>
@@ -45,13 +45,21 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label for="fname" class="col-sm-3 text-right control-label col-form-label">category
+                    Name</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="fname" name="category" placeholder="First Name Here"
+                        required value="<%=data.categoryid.category%>">
+                </div>
+            </div>
+            <div class="form-group row">
                 <label class="col-sm-3 text-right control-label col-form-label">Profile Photo</label>
                 <div class="col-sm-9">
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" id="validatedCustomFile" accept="image/*"
                             name="img">
                         <label class="custom-file-label" for="validatedCustomFile">Choose Profile Photo...</label>
-                        <img src="<%= data.categoryid.img%>" alt="" style="height: 50px; width: 50px;">
+                        <img src="/<%=data.categoryid.img%>" alt="" style="height: 50px; width: 50px;">
                     </div>
                 </div>
             </div>
