@@ -9,4 +9,5 @@ route.get('/viewsubcatgory',subcategoryhandler.viewsubcatgory)
 route.post('/addsubcategory',subcategoryhandler.addsubcategory)
 route.get('/editsubcat',subcategoryhandler.editsubcat)
 route.get('/deletesubcat',subcategoryhandler.deletesubcat)
+route.post('/updatesubcat',subcategoryhandler.updatesubcat)
 module.exports = route
