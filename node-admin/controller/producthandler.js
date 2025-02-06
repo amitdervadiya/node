@@ -18,3 +18,8 @@ module.exports.addproductin = async (req, res) => {
 
     })
 }
+module.exports.viewproduct = async (req,res)=>{
+    await productSchema.find({}).then((data)=>{
+        res.render('viewproduct',{data})
+    })
+}

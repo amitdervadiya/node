@@ -5,6 +5,7 @@ const uploadproductimg = require("../middleware/uploadproductimg")
 
 route.get('/addproduct',producthandler.addproduct)
 route.post('/addproduct',uploadproductimg,producthandler.addproductin)
+route.get('/viewproduct',producthandler.viewproduct)
 
 module.exports = route
 

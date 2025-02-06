@@ -35,22 +35,28 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="fname" class="col-sm-3 text-right control-label col-form-label">subcategory
-                    Name</label>
+                <label for="fname" class="col-sm-3 text-right control-label col-form-label">main
+                    category</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="fname" name="subcategory" placeholder="subcategory Name Here"
-                        required value="<%=data.subcategoryid.subcategory%>">
+                    <select name="subcategoryid" id="">
+                        <% subcategory.map((e,i)=>{%>
+                            <option value="<%=e.id%>" <%= e.id == data.subcategoryid.id ? 'selected' : '' %> >
+                                <%=e.subcategory%>
+                            </option>
+                            <%})%>
+
+                    </select>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="fname" class="col-sm-3 text-right control-label col-form-label">excategory
                     Name</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="fname" name="excategory" placeholder="excategory Name Here"
-                        required value="<%= data.excategory%>">
+                    <input type="text" class="form-control" id="fname" name="excategory"
+                        placeholder="excategory Name Here" required value="<%= data.excategory%>">
                 </div>
             </div>
-        
+
         </div>
         <div class="border-top">
             <div class="card-body">

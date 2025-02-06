@@ -1,6 +1,7 @@
 const exSchema = require('../model/exSchema')
 const subcategorySchema = require('../model/subcategorySchema')
 const categorySchema = require('../model/categorySchema')
+const productSchema = require("../model/productSchema")
 const fs = require('fs')
 
 module.exports.addexcat = async (req, res) => {
@@ -22,9 +23,9 @@ module.exports.viewexcat = async (req, res) => {
 }
 module.exports.editexcat = async (req, res) => {
 
-
+   let subcategory =  await subcategorySchema.find({})
     await exSchema.findById(req.query.id).populate('subcategoryid').then((data) => {
-        res.render('editexcat', { data })
+        res.render('editexcat', { data,subcategory })
     })
 }
 module.exports.updateexcat = async (req, res) => {
