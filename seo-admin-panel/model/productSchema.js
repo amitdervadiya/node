@@ -3,7 +3,7 @@ const schema = mongoose.Schema({
     subcategoryid: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "subcategory",
-        required: false,
+        required: true,
     },
     productname: {
         required: true,

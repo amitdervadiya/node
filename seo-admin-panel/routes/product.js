@@ -7,6 +7,8 @@ route.get('/addproduct',producthandler.addproduct)
 route.post('/addproduct',uploadproductimg,producthandler.addproductin)
 route.get('/viewproduct',producthandler.viewproduct)
 route.get('/deleteproduct',producthandler.deleteproduct)
+route.get('/editproduct',producthandler.editproduct)
+route.post('/updateproduct',producthandler.updateproduct)
 
 module.exports = route
 
