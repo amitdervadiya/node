@@ -2,7 +2,7 @@ const express = require('express')
 const route = express.Router()
 const handler = require('../controller/handler')
 const upload = require('../middleware/upload')
-const passport = require('../middleware/Passport')
+const passport  = require("../middleware/passportcheck")
 
 route.get('/', handler.loginForm)
 route.post('/login', passport.authenticate('local', { failureRedirect: '/' }), handler.login)

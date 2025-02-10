@@ -2,7 +2,6 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy; // Correct import
 const adminSchema = require('../model/adminSchema');
 
-// Passport Local Strategy
 passport.use('local', new LocalStrategy(
     { usernameField: 'email' },
     async (email, password, done) => {
