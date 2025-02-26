@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>homepage</title>
+  <link rel="stylesheet" href="/public/style.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clifford: "#da373d",
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body>
+  <div class="header justify-center flex">
+    <div class="logo h-[inherit] w-[20%] flex justify-end border-none">
+      <img src="/public/img/logo.png" class="h-[100%]" alt="" />
+    </div>
+    <div class="search h-[inherit] w-[50%] flex items-center ">
+
+      <div class="search-bar h-[60%] w-[100%] px-2 ms-3 flex border-grey-100 border justify-center items-center">
+        <span><i class="fa-solid fa-magnifying-glass text-[#666666]"></i></span>
+        <input type="text" placeholder="Search For Movies, Events, Plays, Sports and Activities"
+          class="h-[80%] w-[100%] ms-3  " />
+      </div>
+    </div>
+    <div class="extra h-[inherit] w-[30%]  flex items-center justify-center">
+      <a href="/addpage" class=" bg-black  text-white font-bold py-2 px-4 rounded">
+        Add Movie
+      </a>
+    </div>
+  </div>
+
+  <div class="nav h-[40px] w-full bg-[#f5f5f5] flex  justify-center  border-none">
+    <div class="w-[80%] flex justify-between">
+      <div class="navs  h-[inherit] items-center text-md flex flex-row justify-evenly w-[25%] ">
+        <a href="">Movies</a>
+        <a href="">Streams</a>
+        <a href="">Events</a>
+        <a href="">Plays</a>
+        <a href="">Sports</a>
+        <a href="">Activities</a>
+      </div>
+      <div class="navs h-[inherit] items-center w-[25%]  text-md flex flex-row justify-evenly ">
+        <a href="">ListYourShow</a>
+        <a href="">Corporates</a>
+        <a href="">Offers</a>
+        <a href="">Gift Cards</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-[100%] flex justify-center mt-2">
+
+
+    <div class="slider h-[297px] w-[80%] flex justify-center">
+      <div class="slides h-[297px] w-[100%]">
+        <div class="slide h-[297px] w-full">
+          <img src="../public/img/slide1.avif" alt="Poster 1" class="" />
+        </div>
+        <div class="slide w-full ">
+          <img src="../public/img/slide2.jpg " alt="Poster 2" />
+        </div>
+      </div>
+      <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+      <button class="next" onclick="moveSlide(1)">&#10095;</button>
+    </div>
+  </div>
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelector('.slides');
+    const totalSlides = document.querySelectorAll('.slide').length;
+
+    function moveSlide(direction) {
+      currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+      slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
+    setInterval(() => {
+      moveSlide(1);
+    }, 5000);
+  </script>
+  <div class="w-[100%] justify-center items-center flex mt-3 h-[500px]">
+    <div class="w-[80%] h-[inherit]">
+      <h1 class="text-3xl font-semibold ">Recomended Movies</h1>
+      <div class="content flex h-full">
+        <div class="movieBox  w-full h-[500px] flex items-center">
+          <%data.map((e)=>{%>
+            <div class="co  h-[442px] w-[252px] mx-4">
+              <div class="post w-full">
+                <img src="<%=e.image%>" class="h-[400px] w-full rounded-lg" alt="" id="image" />
+              </div>
+
+              <h1 class="movieName text-xl font-semibold  ">
+                <%=e.name%>
+              </h1>
+              <h1 class="movieTitle text-lg text-[#666666]">
+                <%=e.title%>
+              </h1>
+              <div class="flex  mt-4 justify-start gap-2">
+                <a href="/edit?id=<%=e.id%>"><button class=" bg-blue-500 font-bold text-white rounded py-2 px-3">Edit</button></a>
+                <a href="/delete?id=<%=e.id%>"><button class=" bg-red-500 text-white  font-bold rounded py-2 px-3">Delete</button></a>
+              </div>
+
+            </div>
+            <% })%>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

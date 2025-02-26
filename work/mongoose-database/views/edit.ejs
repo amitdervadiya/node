@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Data Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 flex items-center justify-center min-h-screen">
+    <div class="bg-white border border-gray-200 rounded-lg shadow-lg p-8 max-w-lg w-full">
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-semibold text-gray-800">Update Data</h1>
+            <p class="text-sm text-gray-500">Provide the required information to update the record.</p>
+        </div>
+        <form method="post" action="/updatedata" class="space-y-4">
+            <!-- ID -->
+            <div>
+                <label for="id" class="block text-sm font-medium text-gray-700">ID</label>
+                <input type="text" id="id" name="id" placeholder="Enter ID" value="<%=data.id%>"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <!-- Name -->
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" value="<%=data.name%>"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <!-- Publish Date -->
+            <div>
+                <label for="publishdate" class="block text-sm font-medium text-gray-700">Publish Date</label>
+                <input type="date" id="publishdate" name="publishdate" value="<%=data.publishdate%>"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <!-- Author -->
+            <div>
+                <label for="author" class="block text-sm font-medium text-gray-700">Author</label>
+                <input type="text" id="author" name="author" placeholder="Enter author name" value="<%=data.author%>"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <!-- Category -->
+            <div>
+                <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+                <input type="text" id="category" name="category" placeholder="Enter category" value="<%=data.category%>"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <!-- Image -->
+            <div>
+                <label for="image" class="block text-sm font-medium text-gray-700">Image URL</label>
+                <input type="text" id="image" name="image" placeholder="Enter image URL" value="<%=data.image%>"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <!-- Submit Button -->
+            <button type="submit"
+                class="w-full py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-md shadow-md focus:ring focus:ring-blue-500 focus:outline-none">
+                Update Data
+            </button>
+        </form>
+    </div>
+</body>
+
+</html>

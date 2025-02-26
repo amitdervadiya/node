@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education Books</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 p-6">
+    <h1 class="text-3xl font-bold mb-6 text-center">Education Books</h1>
+    <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <% Books.forEach((e, i)=> { %>
+
+            <div class="bg-white shadow-md rounded-lg p-6 flex flex-col">
+                <img src="<%= e.image %>" alt="Book Image" class="h-48 w-full object-contain rounded-md mb-4">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">
+                    <%= e.name %>
+                </h3>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Category:</span>
+                    <%= e.category %>
+                </p>
+                <p class="text-gray-600 mb-1"><span class="font-medium">Publish Date:</span>
+                    <%= e.publishdate %>
+                </p>
+                <p class="text-gray-600 mb-4"><span class="font-medium">Author:</span>
+                    <%= e.author %>
+                </p>
+            </div>
+
+            <% }); %>
+    </div>
+    <button style="border: 1px solid;width: 120px;height: 50px;background-color: black;color: white;margin-top: 15px;"><a href="/home" class="">back</a></button>
+
+</body>
+
+</html>
