@@ -1,5 +1,7 @@
 const express = require('express')
 const port = 2005
+require('dotenv').config();
+
 const route = require('./routes/route')
 const path = require('path')
 const database = require('./config/database')
