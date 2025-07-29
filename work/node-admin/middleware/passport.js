@@ -5,18 +5,15 @@ const adminschema = require('../model/adminSchema')
 passport.use('local', new localst(
 
     { usernameField: 'email' }, async (email, password, done) => {
-        let admin = await adminschema.findOne({ email, password })
-        if (admin) {
-            if (admin.password == password) {
-                return done(null, admin)
-            }
-            else {
-                return done(null, false)
-            }
+        let admin = await adminschema.findOne({ email });
+        if (!admin) return done(null, false);
+        
+        if (admin.password === password) {
+          return done(null, admin);
+        } else {
+          return done(null, false);
         }
-        else {
-            return done(null, false)
-        }
+        
     }
 ))
 

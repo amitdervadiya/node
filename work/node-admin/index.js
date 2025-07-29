@@ -35,7 +35,7 @@ app.use(session({
 }))
 app.use(passport.initialize())
 app.use(passport.session())
-// app.use(passport.checkauthrise)
+app.use(passport.checkauthrise)
 app.use('/', route)
 app.use('/category', categoryroute )
 app.use('/subcategory', subcategoryroute )
