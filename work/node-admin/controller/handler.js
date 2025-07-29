@@ -81,10 +81,18 @@ module.exports.updateAdmin = async (req, res) => {
     let img = ""
     let singleData = await adminSchema.findById(req.body.id)
    
-
-    req.file ? img = req.file.path : img = singleData.profile
-    req.file && fs.unlinkSync(singleData.profile)
-    req.body.profile = img
+    if (req.file) {
+        img = req.file.path;
+    
+      
+        if (fs.existsSync(singleData.profile)) {
+          fs.unlinkSync(singleData.profile);
+        }
+      } else {
+        img = singleData.profile;
+      }
+    
+      req.body.profile = img;
     await adminSchema.findByIdAndUpdate(req.body.id, req.body).then((data) => {
         res.redirect('/viewAdmin')
     })
