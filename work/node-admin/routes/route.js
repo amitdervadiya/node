@@ -1,26 +1,47 @@
-const express = require('express')
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const passport = require('../middleware/passport');
+const upload = require('../middleware/upload');
+const handler = require('../controller/handler');
+
 const route = express.Router();
-const handler = require('../controller/handler')
-const upload = require('../middleware/upload')
-const passport = require('../middleware/passport')
+const JWT_SECRET = process.env.JWT_SECRET || 'rnw_jwt_secret';
 
+// Public: login page
+route.get('/', handler.loginform);
 
-route.get('/', handler.loginform)
-route.post('/login', passport.authenticate('local', { failureRedirect: "/" }), handler.login)
-route.get('/dashboard', passport.checkAuth, handler.dashboard)
-route.get('/addAdmin', passport.checkAuth, handler.addAdmin)
-route.get('/viewAdmin', passport.checkAuth, handler.viewAdmin)
+// Public: login action → returns JWT
+route.post('/login', (req, res, next) => {
+  passport.authenticate('local', { session: false }, (err, user, info) => {
+    if (err || !user) {
+      return res.status(400).json({ message: info?.message || 'Login failed' });
+    }
 
-route.post('/addNewAdmin', upload, handler.addNewAdmin)
-route.get('/deletedata', handler.deleteAdmin)
-route.get('/editdata', handler.editAdmin)
-route.get('/profile', handler.profile)
-route.post('/updateAdmin', upload, handler.updateAdmin)
-route.get('/changepassword', handler.changepassword)
-route.post('/changepass', handler.changepass)
-route.get('/logout', handler.logout)
-route.post('/forgotpass', handler.forgotpass)
-route.post('/recoverypass', handler.recoverypass)
+    const payload = { id: user._id, email: user.email };
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
 
-module.exports = route
+    res.json({ token, user });
+  })(req, res, next);
+});
 
+// Protected: dashboard
+route.get('/dashboard', passport.authenticate('jwt', { session: false }), handler.dashboard);
+
+// Protected: admin actions
+route.get('/addAdmin', passport.authenticate('jwt', { session: false }), handler.addAdmin);
+route.get('/viewAdmin', passport.authenticate('jwt', { session: false }), handler.viewAdmin);
+route.post('/addNewAdmin', passport.authenticate('jwt', { session: false }), upload, handler.addNewAdmin);
+
+// Public: profile & password reset
+route.get('/profile', handler.profile);
+route.get('/changepassword', handler.changepassword);
+route.post('/changepass', handler.changepass);
+route.post('/forgotpass', handler.forgotpass);
+route.post('/recoverypass', handler.recoverypass);
+
+// Public: logout (client just removes token)
+route.get('/logout', (req, res) => {
+  res.json({ message: 'Logged out. Please delete token on client side.' });
+});
+
+module.exports = route;

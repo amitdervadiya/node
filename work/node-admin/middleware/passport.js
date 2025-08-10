@@ -1,48 +1,44 @@
-const passport = require('passport')
-const localst = require('passport-local').Strategy
-const adminschema = require('../model/adminSchema')
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const bcrypt = require('bcrypt');
+const User = require('../models/User'); // adjust to your actual model
+const JWT_SECRET = process.env.JWT_SECRET || 'rnw_jwt_secret';
 
-passport.use('local', new localst(
+// Local strategy for login
+passport.use(new LocalStrategy(
+  { usernameField: 'email' }, // if your field is 'username', change this
+  async (email, password, done) => {
+    try {
+      const user = await User.findOne({ email });
+      if (!user) return done(null, false, { message: 'User not found' });
 
-    { usernameField: 'email' }, async (email, password, done) => {
-        let admin = await adminschema.findOne({ email });
-        if (!admin) return done(null, false);
-        
-        if (admin.password === password) {
-          return done(null, admin);
-        } else {
-          return done(null, false);
-        }
-        
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) return done(null, false, { message: 'Incorrect password' });
+
+      return done(null, user);
+    } catch (err) {
+      return done(err);
     }
-))
+  }
+));
 
-passport.checkAuth = (req, res, next) => {
-    if (req.isAuthenticated()) {
-        next()
+// JWT strategy for protected routes
+passport.use(new JwtStrategy(
+  {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: JWT_SECRET
+  },
+  async (jwt_payload, done) => {
+    try {
+      const user = await User.findById(jwt_payload.id);
+      if (user) return done(null, user);
+      return done(null, false);
+    } catch (err) {
+      return done(err, false);
     }
-    else {
-        res.redirect('/')
-    }
-}
-passport.serializeUser((user, done) => {
-    console.log(user.id)
-    done(null, user.id)
-})
+  }
+));
 
-passport.deserializeUser(async (userid, done) => {
-    let user = await adminschema.findById(userid)
-    done(null, user)
-})
-passport.checkauthrise = (req, res, next) => {
-    if (req.isAuthenticated()) {
-        res.locals.admin = req.user; 
-        console.log(req.user); 
-    } else {
-        console.log('User is not authenticated');
-    }
-    next();
-};
-
-
-module.exports = passport
+module.exports = passport;
