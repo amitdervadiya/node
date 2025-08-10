@@ -3,7 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const bcrypt = require('bcrypt');
-const User = require('../models/User'); // adjust to your actual model
+const User = require('../model/adminSchema'); // adjust to your actual model
 const JWT_SECRET = process.env.JWT_SECRET || 'rnw_jwt_secret';
 
 // Local strategy for login
