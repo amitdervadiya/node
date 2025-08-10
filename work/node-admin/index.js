@@ -28,16 +28,19 @@ app.use('/public', express.static(path.join(__dirname, 'public')))
 app.use('public/', express.static(path.join(__dirname, 'public')))
 
 
-app.use(session({
-    secret: 'rnw',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        secure: false,       
-        httpOnly: false,
+app.use(
+    session({
+      secret: 'rnw',
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        secure: true,          // because Render uses HTTPS
+        httpOnly: true,
+        sameSite: 'none',      // allow cross-site cookies
         maxAge: 100 * 100 * 60
-    }
-}));
+      }
+    })
+  );
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(passport.checkauthrise)
