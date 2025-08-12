@@ -1,56 +1,48 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
-const adminschema = require('../model/adminSchema');
-const jwt = require('jsonwebtoken');
+const passport = require('passport')
+const localst = require('passport-local').Strategy
+const adminschema = require('../model/adminSchema')
 
-// Local Strategy for login
-passport.use('local', new LocalStrategy(
-  { usernameField: 'email' },
-  async (email, password, done) => {
-    try {
-      let admin = await adminschema.findOne({ email });
-      if (!admin) return done(null, false, { message: 'Invalid email or password' });
+passport.use('local', new localst(
 
-      // TODO: Replace with bcrypt.compare if passwords are hashed
-      if (admin.password !== password) {
-        return done(null, false, { message: 'Invalid email or password' });
-      }
-
-      return done(null, admin);
-    } catch (err) {
-      return done(err);
+    { usernameField: 'email' }, async (email, password, done) => {
+        let admin = await adminschema.findOne({ email });
+        if (!admin) return done(null, false);
+        
+        if (admin.password === password) {
+          return done(null, admin);
+        } else {
+          return done(null, false);
+        }
+        
     }
-  }
-));
+))
 
-// JWT Strategy for protecting routes
-passport.use('jwt', new JwtStrategy(
-  {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.JWT_SECRET || 'default_jwt_secret'
-  },
-  async (jwtPayload, done) => {
-    try {
-      const admin = await adminschema.findById(jwtPayload.id);
-      if (admin) {
-        return done(null, admin);
-      } else {
-        return done(null, false);
-      }
-    } catch (err) {
-      return done(err, false);
+passport.checkAuth = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        next()
     }
-  }
-));
+    else {
+        res.redirect('/')
+    }
+}
+passport.serializeUser((user, done) => {
+    console.log(user.id)
+    done(null, user.id)
+})
 
-// Helper to issue JWT token
-passport.issueJWT = (user) => {
-  const payload = { id: user._id, email: user.email };
-  const token = jwt.sign(payload, process.env.JWT_SECRET || 'default_jwt_secret', {
-    expiresIn: '1h'
-  });
-  return token;
+passport.deserializeUser(async (userid, done) => {
+    let user = await adminschema.findById(userid)
+    done(null, user)
+})
+passport.checkauthrise = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        res.locals.admin = req.user; 
+        console.log(req.user); 
+    } else {
+        console.log('User is not authenticated');
+    }
+    next();
 };
 
-module.exports = passport;
+
+module.exports = passport
